@@ -1,10 +1,32 @@
 // app/(dashboard)/produtos/page.tsx
-export default function ProdutosPage() {
+import { createClient } from '@/lib/supabase/server'
+import { redirect }     from 'next/navigation'
+import { ProdutosClient } from '@/components/produtos/produtos-client'
+
+export default async function ProdutosPage() {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('org_id, role')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile) redirect('/login')
+
+  const { data: products } = await supabase
+    .from('products')
+    .select('id, name, description, price, cost_price, stock_qty, expires_at, created_at')
+    .eq('org_id', profile.org_id)
+    .order('name', { ascending: true })
+
   return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <span className="text-4xl mb-3">📦</span>
-      <h1 className="text-lg font-semibold text-zinc-700">Produtos</h1>
-      <p className="text-sm text-zinc-400 mt-1">Em construção</p>
-    </div>
+    <ProdutosClient
+      products={products ?? []}
+      isAdmin={profile.role === 'admin'}
+    />
   )
 }

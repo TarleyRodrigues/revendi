@@ -5,6 +5,7 @@ import { createClient }      from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { generateSlug }      from '@/lib/utils'
 import { redirect }          from 'next/navigation'
+import { revalidatePath }    from 'next/cache'
 
 // ── LOGIN ─────────────────────────────────────────────────────────────────────
 export async function loginAction(formData: FormData) {
