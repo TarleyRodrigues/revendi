@@ -1,6 +1,3 @@
-// src/lib/supabase/server.ts
-// Usado em Server Components, Server Actions e Route Handlers
-
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/database'
@@ -22,7 +19,7 @@ export async function createClient() {
               cookieStore.set(name, value, options)
             )
           } catch {
-            // Server Component — cookies só podem ser escritos em middleware
+            // Server Component — ignorar
           }
         },
       },
