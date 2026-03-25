@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useMemo, useTransition } from 'react'
+import { toast } from '@/lib/hooks/use-toast'
 import { Package, Plus, Search, Pencil, Trash2, X, Loader2 } from 'lucide-react'
 import {
   createProductAction,

@@ -1,9 +1,10 @@
 // app/(dashboard)/layout.tsx
 
-import { redirect }   from 'next/navigation'
-import { createClient } from '@/lib/supabase/server'
+import { redirect }        from 'next/navigation'
+import { createClient }    from '@/lib/supabase/server'
 import { Sidebar, BottomNav } from '@/components/layout/sidebar'
-import { Header }     from '@/components/layout/header'
+import { Header }          from '@/components/layout/header'
+import { ToastContainer }  from '@/components/ui/toast-container'
 
 export default async function DashboardLayout({
   children,
@@ -41,6 +42,7 @@ export default async function DashboardLayout({
           </main>
         </div>
         <BottomNav />
+        <ToastContainer />
       </div>
     )
   }
@@ -62,8 +64,8 @@ export default async function DashboardLayout({
         </main>
       </div>
 
-      {/* Bottom nav mobile — único, vindo do sidebar.tsx */}
       <BottomNav />
+      <ToastContainer />
     </div>
   )
 }
